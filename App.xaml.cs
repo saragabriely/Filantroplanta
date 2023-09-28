@@ -10,7 +10,7 @@ public partial class App : Application
 	{
 		InitializeComponent();
 
-        var nav = new NavigationPage(new Login());
+        var nav = new NavigationPage(new ProdPaginaInicial());
 
         //NavigationPage.SetTitleIconImageSource(this, "icone.png");
 

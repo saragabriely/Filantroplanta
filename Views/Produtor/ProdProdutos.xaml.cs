@@ -6,4 +6,11 @@ public partial class ProdProdutos : ContentPage
 	{
 		InitializeComponent();
 	}
+
+    private void ButtonAdicionarProduto_Clicked(object sender, EventArgs e)
+    {
+        Navigation.PushAsync(new ProdCadastroProduto());
+
+        //entNomeProduto.Text;
+    }
 }

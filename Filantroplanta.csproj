@@ -57,6 +57,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Remove="Resources\Images\estoque.png" />
 	  <None Remove="Resources\Images\home.png" />
 	  <None Remove="Resources\Images\icone.png" />
 	  <None Remove="Resources\Images\listapedidos.png" />
@@ -66,6 +67,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="Views\Produtor\ProdMinhaConta.xaml.cs">
+	    <DependentUpon>ProdMinhaConta.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="Views\Produtor\ProdPaginaInicial.xaml.cs">
 	    <DependentUpon>ProdPaginaInicial.xaml</DependentUpon>
 	  </Compile>
@@ -85,6 +89,15 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\Login.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Produtor\ProdCadastroProduto.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Produtor\ProdControleEstoque.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Produtor\ProdMinhaConta.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\PaginaInicial.xaml">

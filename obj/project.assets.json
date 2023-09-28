@@ -24639,11 +24639,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\sarag\\Downloads\\Maui\\Filantroplanta\\Filantroplanta.csproj",
+      "projectUniqueName": "C:\\Users\\sarag\\source\\repos\\Filantroplanta\\Filantroplanta.csproj",
       "projectName": "Filantroplanta",
-      "projectPath": "C:\\Users\\sarag\\Downloads\\Maui\\Filantroplanta\\Filantroplanta.csproj",
+      "projectPath": "C:\\Users\\sarag\\source\\repos\\Filantroplanta\\Filantroplanta.csproj",
       "packagesPath": "C:\\Users\\sarag\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\sarag\\Downloads\\Maui\\Filantroplanta\\obj\\",
+      "outputPath": "C:\\Users\\sarag\\source\\repos\\Filantroplanta\\obj\\",
       "projectStyle": "PackageReference",
       "crossTargeting": true,
       "fallbackFolders": [
