@@ -5,5 +5,6 @@ public partial class ProdPaginaInicial : TabbedPage
 	public ProdPaginaInicial()
 	{
 		InitializeComponent();
+
 	}
 }
