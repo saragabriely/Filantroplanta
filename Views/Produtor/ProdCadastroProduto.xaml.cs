@@ -4,14 +4,50 @@ namespace Filantroplanta.Views.Produtor;
 
 public partial class ProdCadastroProduto : ContentPage
 {
-	public ProdCadastroProduto()
+    public Produto produto { get; set; }
+
+    public ProdCadastroProduto()
 	{
 		InitializeComponent();
 	}
 
+    public ProdCadastroProduto(Produto produto)
+    {
+        InitializeComponent();
+
+        this.produto = produto;
+
+        entNomeProduto.Text = produto.Descricao;
+        entQtde.Text        = produto.Quantidade.ToString();
+        entValorPorKG.Text  = produto.ValorPorKG.ToString();
+
+        btnExcluir_.IsVisible   = true;
+        btnSalvar_.IsVisible    = true;
+        btnCadastrar_.IsVisible = false;
+    }
+
+    private void ButtonSalvarProduto_Clicked(object sender, EventArgs e)
+    {
+        RealizarCadastroProduto();
+    }
+
     private void ButtonCadastrarProduto_Clicked(object sender, EventArgs e)
     {
         RealizarCadastroProduto();
+    }
+
+    private void ButtonExcluirProduto_Clicked(object sender, EventArgs e)
+    {
+        ExcluirProduto();
+    }
+
+    private void ExcluirProduto()
+    {
+        if(produto != null && produto.Produto_ID > 0)
+        {
+
+            NavegarListaProdutos();
+        }
     }
 
     private void ButtonCancelar_Clicked(object sender, EventArgs e)
@@ -26,6 +62,7 @@ public partial class ProdCadastroProduto : ContentPage
 
     private async void RealizarCadastroProduto()
     {
+        long pessoaID = 0;
         var nomeProduto = entNomeProduto.Text;
         var quantidade  = entQtde.Text;
         var valorPorKG  = entValorPorKG.Text;
@@ -41,13 +78,25 @@ public partial class ProdCadastroProduto : ContentPage
 
         else
         {
-            var produto = new Produto();
+            if(this.produto != null && this.produto.Produto_ID > 0)
+            {
+                this.produto.Descricao  = nomeProduto;
+                this.produto.Quantidade = Convert.ToInt64(quantidade);
+                this.produto.ValorPorKG = Convert.ToDecimal(valorPorKG);
 
-            produto.Descricao = nomeProduto;
-            produto.Quantidade = Convert.ToInt64(quantidade);
-            produto.ValorPorKG = Convert.ToDecimal(valorPorKG);
+                await DisplayAlert("Cadastro atualizado", "Cadastro atualizado com sucesso!", "OK");
+            }
+            else
+            {
+                var novo = new Produto();
 
-            await DisplayAlert("Cadastro realizado", "Cadastro realizado com sucesso!", "OK");
+                novo.Descricao = nomeProduto;
+                novo.Quantidade = Convert.ToInt64(quantidade);
+                novo.ValorPorKG = Convert.ToDecimal(valorPorKG);
+                novo.mProdutor  = new Pessoa { Pessoa_ID = pessoaID };
+
+                await DisplayAlert("Cadastro realizado", "Cadastro realizado com sucesso!", "OK");
+            }
 
             NavegarListaProdutos();
         }

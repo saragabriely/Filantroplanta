@@ -29,6 +29,7 @@ public partial class CadastroPessoa : ContentPage
         var endereco       = entEndereco.Text;
         var numero         = entNumero.Text;
         var complemento    = entComplemento.Text;
+        var bairro         = entBairro.Text;
         var cidade         = entCidade.Text;
         var estado         = entEstado.Text;
         var telefone       = entTelefone.Text;
@@ -50,6 +51,9 @@ public partial class CadastroPessoa : ContentPage
 
         else if (string.IsNullOrEmpty(numero))
             LancarExcecaoCampoVazio("NUMERO");
+
+        else if (string.IsNullOrEmpty(bairro))
+            LancarExcecaoCampoVazio("BAIRRO");
 
         else if (string.IsNullOrEmpty(cidade))
             LancarExcecaoCampoVazio("CIDADE");
@@ -83,6 +87,7 @@ public partial class CadastroPessoa : ContentPage
             pessoa.Endereco  = endereco;
             pessoa.Numero    = Convert.ToInt32(numero);
             pessoa.Complemento = complemento;
+            pessoa.Bairro    = bairro;
             pessoa.Cidade    = cidade;
             pessoa.Estado    = estado;
             pessoa.Telefone  = telefone;

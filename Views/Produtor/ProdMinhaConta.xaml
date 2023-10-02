@@ -5,7 +5,7 @@
              Title="Minha Conta">
     <VerticalStackLayout>
         <Label 
-            Text="Welcome to .NET MAUI!"
+            Text="Minha Conta"
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
     </VerticalStackLayout>

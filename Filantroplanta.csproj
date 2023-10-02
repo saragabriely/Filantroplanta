@@ -57,6 +57,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Remove="Resources\Images\email.png" />
 	  <None Remove="Resources\Images\estoque.png" />
 	  <None Remove="Resources\Images\home.png" />
 	  <None Remove="Resources\Images\icone.png" />
@@ -75,9 +76,6 @@
 	  </Compile>
 	  <Compile Update="Views\Produtor\ProdHome.xaml.cs">
 	    <DependentUpon>ProdHome.xaml</DependentUpon>
-	  </Compile>
-	  <Compile Update="Views\Produtor\ProdListaPedidos.xaml.cs">
-	    <DependentUpon>ProdListaPedidos.xaml</DependentUpon>
 	  </Compile>
 	  <Compile Update="Views\Usuario\CadastroPessoa.xaml.cs">
 	    <DependentUpon>CadastroPessoa.xaml</DependentUpon>
@@ -106,10 +104,10 @@
 	  <MauiXaml Update="Views\Produtor\ProdHome.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\Produtor\ProdListaPedidos.xaml">
+	  <MauiXaml Update="Views\Produtor\ProdPaginaInicial.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\Produtor\ProdPaginaInicial.xaml">
+	  <MauiXaml Update="Views\Produtor\ProdPedidos.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\Produtor\ProdProdutos.xaml">
@@ -121,6 +119,10 @@
 	  <MauiXaml Update="Views\Usuario\MinhaConta.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Controle\Restaurante\" />
 	</ItemGroup>
 
 </Project>

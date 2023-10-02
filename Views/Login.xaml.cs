@@ -15,8 +15,4 @@ public partial class Login : ContentPage
         Navigation.PushAsync(new CadastroPessoa());
     }
 
-    //private async void CliqueAquiEsqueceuEmail(object sender, EventArgs e)
-    //{
-    //    await Navigation.PushModalAsync(new Views.Pessoa.CadastroPessoa());
-    //}
 }

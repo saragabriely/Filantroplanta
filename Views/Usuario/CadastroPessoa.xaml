@@ -52,6 +52,10 @@
             <Entry x:Name="entComplemento" Placeholder="1" />
             <BoxView HeightRequest="1" Color="LightGray" Margin="0,0,0,10" />
 
+            <Label Text="Bairro" />
+            <Entry x:Name="entBairro" Placeholder="1" />
+            <BoxView HeightRequest="1" Color="LightGray" Margin="0,0,0,10" />
+
             <Label Text="Cidade" />
             <Entry x:Name="entCidade" Placeholder="São Paulo" />
             <BoxView HeightRequest="1" Color="LightGray" Margin="0,0,0,10" />

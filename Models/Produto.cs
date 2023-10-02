@@ -12,6 +12,7 @@ namespace Filantroplanta.Models
         public string Descricao { get; set; }
         public long Quantidade { get; set; }
         public decimal ValorPorKG { get; set; }
+        public Pessoa mProdutor { get; set; }
 
 
         public Produto() { }

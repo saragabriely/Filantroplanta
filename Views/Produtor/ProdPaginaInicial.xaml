@@ -21,13 +21,13 @@
     
     <NavigationPage Title="Estoque" IconImageSource="estoque.png">
         <x:Arguments>
-            <local:ProdMinhaConta Title="Estoque" />
+            <local:ProdControleEstoque Title="Estoque" />
         </x:Arguments>
     </NavigationPage>
     
     <NavigationPage Title="Pedidos" IconImageSource="listapedidos.png">
         <x:Arguments>
-            <local:ProdListaPedidos Title="Pedidos" />
+            <local:ProdPedidos Title="Pedidos" />
         </x:Arguments>
     </NavigationPage>
     
@@ -36,6 +36,5 @@
             <local:ProdMinhaConta Title="Minha Conta" />
         </x:Arguments>
     </NavigationPage>
-    
     
 </TabbedPage>
