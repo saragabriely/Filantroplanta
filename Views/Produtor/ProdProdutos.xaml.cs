@@ -1,5 +1,6 @@
 using Filantroplanta.Models;
 using Filantroplanta.Mock;
+using Filantroplanta.Controle.Produtor;
 
 namespace Filantroplanta.Views.Produtor;
 
@@ -14,7 +15,9 @@ public partial class ProdProdutos : ContentPage
 
     private void BuscarProdutos()
     {
-        var lista = MockListaProdutos();
+        var ctrlProduto = new ControleProduto();
+
+        var lista = ctrlProduto.MockListaProdutos();
 
         if(lista != null )
         {
@@ -39,19 +42,6 @@ public partial class ProdProdutos : ContentPage
 
     private void NavegarTelaCadastro(Produto produto)
     {
-        //await DisplayAlert("Produto", produto.Descricao, "OK");
-
         Navigation.PushAsync(new ProdCadastroProduto(produto));
-    }
-
-    public List<Produto> MockListaProdutos()
-    {
-        var mock = new MockGeral();
-        var listaProdutos = new List<Produto>();
-                                                                                                                         
-        listaProdutos.Add(mock.MockProduto01());
-        listaProdutos.Add(mock.MockProduto02());
-
-        return listaProdutos; 
     }
 }

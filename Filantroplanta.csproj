@@ -95,6 +95,9 @@
 	  <MauiXaml Update="Views\Produtor\ProdControleEstoque.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\Produtor\ProdEstoque.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\Produtor\ProdMinhaConta.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

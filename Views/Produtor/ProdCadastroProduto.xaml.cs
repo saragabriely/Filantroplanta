@@ -1,3 +1,4 @@
+using Filantroplanta.Controle.Produtor;
 using Filantroplanta.Models;
 
 namespace Filantroplanta.Views.Produtor;
@@ -78,11 +79,15 @@ public partial class ProdCadastroProduto : ContentPage
 
         else
         {
+            var controleProduto = new ControleProduto();
+
             if(this.produto != null && this.produto.Produto_ID > 0)
             {
                 this.produto.Descricao  = nomeProduto;
                 this.produto.Quantidade = Convert.ToInt64(quantidade);
                 this.produto.ValorPorKG = Convert.ToDecimal(valorPorKG);
+
+                controleProduto.SalvarProduto(this.produto);
 
                 await DisplayAlert("Cadastro atualizado", "Cadastro atualizado com sucesso!", "OK");
             }
@@ -95,6 +100,8 @@ public partial class ProdCadastroProduto : ContentPage
                 novo.ValorPorKG = Convert.ToDecimal(valorPorKG);
                 novo.mProdutor  = new Pessoa { Pessoa_ID = pessoaID };
 
+                controleProduto.CadastrarProduto(novo);
+
                 await DisplayAlert("Cadastro realizado", "Cadastro realizado com sucesso!", "OK");
             }
 
@@ -106,5 +113,4 @@ public partial class ProdCadastroProduto : ContentPage
     {
         await DisplayAlert("Campo Vazio", $"Popule o campo '{campo}'", "OK");
     }
-
 }
