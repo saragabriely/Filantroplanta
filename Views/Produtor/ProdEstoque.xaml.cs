@@ -21,48 +21,58 @@ public partial class ProdEstoque : ContentPage
 
     private void btnCancelar_Clicked(object sender, EventArgs e)
     {
-        NavegarTelaControleEstoque();
+        Voltar();
     }
 
-    private void btnSalvarProduto_Clicked(object sender, EventArgs e)
+    private void Voltar()
     {
-        var quantidadeDigitada = entQtde.Text.Trim();
+        Navigation.PopAsync();
+    }
 
-        if(!string.IsNullOrEmpty(quantidadeDigitada))
+    private async void btnSalvarProduto_Clicked(object sender, EventArgs e)
+    {
+        try
         {
-            var qtdeNumerica = Convert.ToInt32(quantidadeDigitada);
+            var quantidadeDigitada = entQtde.Text.Trim();
 
-            if(qtdeNumerica > 0)
+            if (!string.IsNullOrEmpty(quantidadeDigitada))
             {
-                if(qtdeNumerica != this.ProdutoSelecionado.Quantidade)
+                var qtdeNumerica = Convert.ToInt32(quantidadeDigitada);
+
+                if (qtdeNumerica > 0)
                 {
-                    var controleEstoque = new ControleEstoque();
+                    if (qtdeNumerica != this.ProdutoSelecionado.Quantidade)
+                    {
+                        var controleEstoque = new ControleEstoque();
 
-                    this.ProdutoSelecionado.Quantidade = qtdeNumerica;
+                        this.ProdutoSelecionado.Quantidade = qtdeNumerica;
 
-                    controleEstoque.AtualizarEstoque(new Estoque());
+                        controleEstoque.AtualizarEstoque(new Estoque());
 
-                    NavegarTelaControleEstoque();
+                        Voltar();
+                    }
                 }
             }
+            else
+            {
+                LancarExcecaoCampoVazio("QUANTIDADE");
+            }
         }
-        else
+        catch(Exception ex)
         {
-            LancarExcecaoCampoVazio("QUANTIDADE");
+            await DisplayAlert("Erro - Estoque", ex.Message, "OK");
         }
-    }
-
-    private void NavegarTelaControleEstoque()
-    {
-        Navigation.PushAsync(new ProdControleEstoque());
     }
 
     public void PopularCampos(Produto produto)
     {
-        lblProduto.Text = produto.Descricao;
-        entQtde.Text    = produto.Quantidade.ToString();
+        if(produto != null)
+        {
+            lblProduto.Text = produto.Descricao;
+            entQtde.Text    = produto.Quantidade.ToString();
 
-        ProdutoSelecionado = produto;
+            ProdutoSelecionado = produto;
+        }  
     }
 
     public async void LancarExcecaoCampoVazio(string campo)

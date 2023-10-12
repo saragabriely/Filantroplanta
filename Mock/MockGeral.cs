@@ -61,6 +61,15 @@ namespace Filantroplanta.Mock
             return new Produto { Produto_ID = 1, Descricao = "Tomate Roma", Quantidade = 1000, ValorPorKG = 100 };
         }
 
+        public List<Produto> MockListaProdutos()
+        {
+            return new List<Produto>
+            {
+                MockProduto01(),
+                MockProduto02()
+            };
+        }
+
         public Pedido MockPedidoPendenteAprovacao()
         {
             return

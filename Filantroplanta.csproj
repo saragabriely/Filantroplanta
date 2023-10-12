@@ -116,6 +116,9 @@
 	  <MauiXaml Update="Views\Produtor\ProdProdutos.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\Usuario\AlterarSenha.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\Usuario\CadastroPessoa.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
@@ -126,6 +129,10 @@
 
 	<ItemGroup>
 	  <Folder Include="Controle\Restaurante\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="LazyCache" Version="2.4.0" />
 	</ItemGroup>
 
 </Project>

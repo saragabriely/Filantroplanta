@@ -6,6 +6,8 @@ namespace Filantroplanta.Views.Produtor;
 
 public partial class ProdProdutos : ContentPage
 {
+    public ControleProduto controleProduto = new ControleProduto();
+
 	public ProdProdutos()
 	{
 		InitializeComponent();
@@ -13,18 +15,21 @@ public partial class ProdProdutos : ContentPage
         BuscarProdutos();
     }
 
+    public ProdProdutos(List<Produto> produtos)
+    {
+        InitializeComponent();
+
+        listaProdutos.ItemsSource = produtos;
+    }
+
     private void BuscarProdutos()
     {
-        var ctrlProduto = new ControleProduto();
+        var lista = controleProduto.MockListaProdutos();
 
-        var lista = ctrlProduto.MockListaProdutos();
-
-        if(lista != null )
-        {
+        if(lista != null && lista.Count > 0)
             listaProdutos.ItemsSource = lista;
-            stListaProdutos.IsVisible = true;
-            lblListaVazia.IsVisible   = false;
-        }
+        else
+            lblListaVazia.IsVisible = true;
     }
 
     private void ButtonAdicionarProduto_Clicked(object sender, EventArgs e)
@@ -34,8 +39,8 @@ public partial class ProdProdutos : ContentPage
 
     private void listaProdutos_ItemSelected(object sender, SelectedItemChangedEventArgs e)
     {
-        Produto produto = e.SelectedItem as Produto;
-
+        var produto = (Produto)e.SelectedItem;
+        
         if (produto != null)
             NavegarTelaCadastro(produto);
     }

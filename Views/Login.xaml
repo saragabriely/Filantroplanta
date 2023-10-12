@@ -48,7 +48,9 @@
 
             <Entry Placeholder="Digite o seu usuário"  
                    HorizontalTextAlignment="Center"
-                   WidthRequest="300"    
+                   WidthRequest="300"  
+                   x:Name="entUsuario"
+                   Keyboard="Email"
                    />
         </Border>
 
@@ -69,7 +71,9 @@
                 >
             <Entry Placeholder="*****"  
                    HorizontalTextAlignment="Center"
-                   WidthRequest="300"    
+                   WidthRequest="300"
+                   x:Name="entSenha"
+                   IsPassword="True"
                    />
         </Border>
 

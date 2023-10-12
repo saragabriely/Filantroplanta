@@ -10,13 +10,10 @@ public partial class App : Application
 	{
 		InitializeComponent();
 
-        var nav = new NavigationPage(new ProdPaginaInicial());
-
-        //NavigationPage.SetTitleIconImageSource(this, "icone.png");
+        var nav = new NavigationPage(new Login());
 
         nav.BarBackgroundColor = Colors.DarkGreen;
         nav.BarTextColor = Colors.White;
-        //nav.IconImageSource = "icone.png";
 
         MainPage = nav;
     }

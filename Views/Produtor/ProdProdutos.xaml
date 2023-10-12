@@ -24,22 +24,19 @@
                     HorizontalOptions="Center"
                     StrokeShape="RoundRectangle 6"
                      >
-            <Button Text="+ Adicionar Produto" WidthRequest="300" BackgroundColor="#1C6B00" TextColor="White" FontAttributes="Bold" Clicked="ButtonAdicionarProduto_Clicked" VerticalOptions="EndAndExpand"  />
+            <Button Text="+ Adicionar Produto" WidthRequest="300" BackgroundColor="#AA7C04" TextColor="White" FontAttributes="Bold" Clicked="ButtonAdicionarProduto_Clicked" VerticalOptions="EndAndExpand"  />
         </Border>
 
-        <Label x:Name="lblListaVazia" Text="Nenhum produto cadastrado até o momento" FontSize="14" Margin="0,20,0,0" TextColor="DarkGray" HorizontalTextAlignment="Center" />
+        <Label x:Name="lblListaVazia" Text="Nenhum produto cadastrado até o momento" FontSize="14" Margin="0,20,0,0" TextColor="DarkGray" HorizontalTextAlignment="Center" IsVisible="false" />
 
         <ScrollView>
-            <StackLayout x:Name="stListaProdutos" Margin="0,20,0,0" IsVisible="false" >
-
-                <ListView x:Name="listaProdutos" ItemSelected="listaProdutos_ItemSelected">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <TextCell Text="{Binding Descricao}"  />
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-            </StackLayout>
+            <ListView x:Name="listaProdutos" ItemSelected="listaProdutos_ItemSelected" Margin="0,20,0,0"  >
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextCell Text="{Binding Descricao}" />
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </ScrollView>
 
     </VerticalStackLayout>

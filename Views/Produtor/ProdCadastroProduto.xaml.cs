@@ -1,4 +1,5 @@
 using Filantroplanta.Controle.Produtor;
+using Filantroplanta.Mock;
 using Filantroplanta.Models;
 
 namespace Filantroplanta.Views.Produtor;
@@ -6,6 +7,8 @@ namespace Filantroplanta.Views.Produtor;
 public partial class ProdCadastroProduto : ContentPage
 {
     public Produto produto { get; set; }
+    public MockGeral mock = new MockGeral();
+    public ControleProduto controleProduto = new ControleProduto();
 
     public ProdCadastroProduto()
 	{
@@ -15,16 +18,19 @@ public partial class ProdCadastroProduto : ContentPage
     public ProdCadastroProduto(Produto produto)
     {
         InitializeComponent();
+        
+        if(produto != null)
+        {
+            this.produto = produto;
 
-        this.produto = produto;
+            entNomeProduto.Text = this.produto.Descricao;
+            entQtde.Text        = this.produto.Quantidade.ToString();
+            entValorPorKG.Text  = this.produto.ValorPorKG.ToString();
 
-        entNomeProduto.Text = produto.Descricao;
-        entQtde.Text        = produto.Quantidade.ToString();
-        entValorPorKG.Text  = produto.ValorPorKG.ToString();
-
-        btnExcluir_.IsVisible   = true;
-        btnSalvar_.IsVisible    = true;
-        btnCadastrar_.IsVisible = false;
+            btnExcluir_.IsVisible   = true;
+            btnSalvar_.IsVisible    = true;
+            btnCadastrar_.IsVisible = false;
+        }
     }
 
     private void ButtonSalvarProduto_Clicked(object sender, EventArgs e)
@@ -37,28 +43,47 @@ public partial class ProdCadastroProduto : ContentPage
         RealizarCadastroProduto();
     }
 
-    private void ButtonExcluirProduto_Clicked(object sender, EventArgs e)
+    private async void ButtonExcluirProduto_Clicked(object sender, EventArgs e)
     {
-        ExcluirProduto();
+        //produto = this.produto;
+
+        if(this.produto != null)
+            ExcluirProduto(this.produto);
+        else
+            await DisplayAlert("Produto vazio", "Ocorreu algum problema com o produto", "OK");
     }
 
-    private void ExcluirProduto()
+    private void ExcluirProduto(Produto produto)
     {
         if(produto != null && produto.Produto_ID > 0)
         {
+            var listaProdutos = controleProduto.ExcluirProdutoCache(produto);
 
-            NavegarListaProdutos();
+            Voltar(listaProdutos);
+
+            //NavegarListaProdutos();
         }
     }
 
     private void ButtonCancelar_Clicked(object sender, EventArgs e)
     {
-        NavegarListaProdutos();
+        Voltar();
+    }
+
+    public void Voltar(List<Produto> listaProdutos)
+    {
+        Navigation.PushAsync(new ProdProdutos(listaProdutos));
+    }
+
+    public void Voltar()
+    {
+        Navigation.PopAsync();
+        //Navigation.PopModalAsync();
     }
 
     public void NavegarListaProdutos()
     {
-        Navigation.PushAsync(new ProdProdutos());
+        Voltar();
     }
 
     private async void RealizarCadastroProduto()
@@ -87,7 +112,7 @@ public partial class ProdCadastroProduto : ContentPage
                 this.produto.Quantidade = Convert.ToInt64(quantidade);
                 this.produto.ValorPorKG = Convert.ToDecimal(valorPorKG);
 
-                controleProduto.SalvarProduto(this.produto);
+                controleProduto.SalvarAdicionarProduto(this.produto);
 
                 await DisplayAlert("Cadastro atualizado", "Cadastro atualizado com sucesso!", "OK");
             }
@@ -100,12 +125,14 @@ public partial class ProdCadastroProduto : ContentPage
                 novo.ValorPorKG = Convert.ToDecimal(valorPorKG);
                 novo.mProdutor  = new Pessoa { Pessoa_ID = pessoaID };
 
-                controleProduto.CadastrarProduto(novo);
+                controleProduto.SalvarAdicionarProduto(novo);
 
                 await DisplayAlert("Cadastro realizado", "Cadastro realizado com sucesso!", "OK");
             }
 
-            NavegarListaProdutos();
+            Voltar(controleProduto.BuscarListaProdutoCache());
+
+            //NavegarListaProdutos();
         }
     }
 

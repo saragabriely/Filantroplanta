@@ -4,6 +4,7 @@
              xmlns:local="clr-namespace:Filantroplanta.Views.Produtor"
              xmlns:android="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific;assembly=Microsoft.Maui.Controls"
              android:TabbedPage.ToolbarPlacement="Bottom"
+             NavigationPage.HasBackButton="False"
              x:Class="Filantroplanta.Views.Produtor.ProdPaginaInicial"
              >
     
