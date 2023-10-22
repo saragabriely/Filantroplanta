@@ -1,5 +1,7 @@
+using Filantroplanta.Controle;
 using Filantroplanta.Controle.Pessoa;
 using Filantroplanta.Models;
+using Filantroplanta.Views.Componentizacao.Botao;
 using Filantroplanta.Views.Produtor;
 using LazyCache;
 using System.Threading.Tasks;
@@ -9,44 +11,64 @@ namespace Filantroplanta.Views.Usuario;
 public partial class CadastroPessoa : ContentPage
 {
     public Pessoa pessoa { get; set; }
-
     public ControlePessoa controlePessoa = new ControlePessoa();
+    public BotoesCancelarSalvar btnCancelarSalvar = new BotoesCancelarSalvar();
+    public ControleComponentizacao controleComponente = new ControleComponentizacao();
 
     public CadastroPessoa()
 	{
 		InitializeComponent();
+
+        this.BotoesCancelarSalvar("Cancelar", "Finalizar");
     }
 
     public CadastroPessoa(Pessoa pessoaCadastrada)
     {
         InitializeComponent();
 
-        pessoaCadastrada = controlePessoa.BuscarPessoa(1);
+        this.BotoesCancelarSalvar("Cancelar", "Salvar");
 
         if (pessoaCadastrada != null)
         {
             this.pessoa = pessoaCadastrada;
             PopularCamposCadastro(pessoaCadastrada);
         }
+        else
+        {
+            //VoltarTelaLogin();
+        }
     }
+
+    private void BotoesCancelarSalvar(string btnCancelar, string btnSalvar)
+    {
+        hsBotoesSalvarCancelar.Children.Add(btnCancelarSalvar);
+
+        var botaoSalvar = btnCancelarSalvar.FindByName<Button>(controleComponente.NomeBotaoSalvar);
+        if (botaoSalvar != null)
+        {
+            botaoSalvar.Clicked += this.ButtonSalvarPessoa_Clicked;
+            btnCancelarSalvar.TituloSalvar = btnSalvar;
+        }
+
+        var botaoCancelar = btnCancelarSalvar.FindByName<Button>(controleComponente.NomeBotaoCancelar);
+        if (botaoCancelar != null)
+        {
+            botaoCancelar.Clicked += this.ButtonCancelar_Clicked;
+            btnCancelarSalvar.TituloCancelar = btnCancelar;
+        }
+    }    
 
     private void ButtonCancelar_Clicked(object sender, EventArgs e)
     {
-        if(this.pessoa != null && this.pessoa.Pessoa_ID != 0)
-        {
-            if (this.pessoa.mTipoPessoa.TipoPessoa_ID == TipoPessoa.Produtor)
-                VoltarTelaProdMinhaConta();
-        }
-        else 
-            VoltarTelaLogin();
+        Voltar();
     }
 
-    private async void ButtonFinalizar_Clicked(object sender, EventArgs e)
+    private async void ButtonSalvarPessoa_Clicked(object sender, EventArgs e)
     {
-        await FinallizarOuSalvarCadastro();
+        await FinalizarOuSalvarCadastro();
     }
 
-    public async Task FinallizarOuSalvarCadastro()
+    public async Task FinalizarOuSalvarCadastro()
     {
         var taskPessoa = ValidarCamposPopulados();
         var pessoa     = taskPessoa.Result as Pessoa;
@@ -59,15 +81,15 @@ public partial class CadastroPessoa : ContentPage
 
             await DisplayAlert("Cadastro realizado", "Cadastro realizado com sucesso!", "OK");
 
-            VoltarTelaLogin();
+            Voltar();
         }
         else if(pessoa != null && pessoa.Pessoa_ID > 0)
         {
-            controlePessoa.SalvarPessoa(this.pessoa);
+            controlePessoa.AdicionarSalvarPessoaCache(this.pessoa, $"Pessoa_{this.pessoa.Pessoa_ID}");
 
             await DisplayAlert("Cadastro atualizado", "Cadastro atualizado com sucesso!", "OK");
 
-            VoltarTelaProdMinhaConta();
+            Voltar();
         }
     }
 
@@ -189,11 +211,7 @@ public partial class CadastroPessoa : ContentPage
         await DisplayAlert("Campo Vazio", $"Popule o campo '{campo}'", "OK");
     }
 
-    private void VoltarTelaLogin()
-    {
-        Navigation.PushAsync(new Login());
-    }
-    private void VoltarTelaProdMinhaConta()
+    private void Voltar()
     {
         Navigation.PopAsync();
     }
@@ -224,7 +242,5 @@ public partial class CadastroPessoa : ContentPage
         stPerfilCadastro.IsVisible  = true;
         lblPrimeiroCadastro.IsVisible = false;
         lblMeuCadastro.IsVisible    = true;
-        btnSalvar_.IsVisible        = true;
-        btnFinalizar_.IsVisible     = false;
     }
 }

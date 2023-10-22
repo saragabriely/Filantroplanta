@@ -1,6 +1,11 @@
+using Filantroplanta.Controle;
 using Filantroplanta.Controle.Produtor;
 using Filantroplanta.Mock;
 using Filantroplanta.Models;
+using Filantroplanta.Views.Componentizacao.Botao;
+using Filantroplanta.Views.Componentizacao.Label_Input;
+using Microsoft.Maui.Controls;
+using System.Windows.Input;
 
 namespace Filantroplanta.Views.Produtor;
 
@@ -9,27 +14,69 @@ public partial class ProdCadastroProduto : ContentPage
     public Produto produto { get; set; }
     public MockGeral mock = new MockGeral();
     public ControleProduto controleProduto = new ControleProduto();
+    public BotoesCancelarSalvar btnCancelarSalvar = new BotoesCancelarSalvar();
+    public BotaoExcluirRecusar  btnExcluirRecusar = new BotaoExcluirRecusar();
+    public LabelInput  labelInput = new LabelInput();
+    public ControleComponentizacao controleComponente = new ControleComponentizacao();
 
     public ProdCadastroProduto()
 	{
 		InitializeComponent();
-	}
+
+        this.BotoesCancelarSalvar("Cancelar", "Finalizar");
+    }
+
+    private void BotoesCancelarSalvar(string btnCancelar, string btnSalvar)
+    {
+        hsBotoesSalvarCancelar.Children.Add(btnCancelarSalvar);
+
+        var botaoSalvar = btnCancelarSalvar.FindByName<Button>(controleComponente.NomeBotaoSalvar);
+        if (botaoSalvar != null)
+        {
+            botaoSalvar.Clicked += this.ButtonSalvarProduto_Clicked;
+            btnCancelarSalvar.TituloSalvar = btnSalvar;
+        }
+
+        var botaoCancelar = btnCancelarSalvar.FindByName<Button>(controleComponente.NomeBotaoCancelar);
+        if (botaoCancelar != null)
+        {
+            botaoCancelar.Clicked += this.ButtonCancelar_Clicked;
+            btnCancelarSalvar.TituloCancelar = btnCancelar;
+        }
+    }
+
+    private void BotaoExcluir(string btnExcluir)
+    {
+        slBotaoExcluir.Children.Add(btnExcluirRecusar);
+
+        var botaoExcluir = btnExcluirRecusar.FindByName<Button>(controleComponente.NomeBotaoExcluirRecusar);
+        if (botaoExcluir != null)
+        {
+            botaoExcluir.Clicked  += this.ButtonExcluirProduto_Clicked;
+            botaoExcluir.IsVisible = true;
+            btnExcluirRecusar.Titulo = btnExcluir;
+        }
+    }
 
     public ProdCadastroProduto(Produto produto)
     {
         InitializeComponent();
-        
-        if(produto != null)
+
+        this.BotoesCancelarSalvar("Cancelar", "Salvar");
+        this.BotaoExcluir("Excluir");
+
+        if (produto != null)
         {
             this.produto = produto;
 
-            entNomeProduto.Text = this.produto.Descricao;
-            entQtde.Text        = this.produto.Quantidade.ToString();
-            entValorPorKG.Text  = this.produto.ValorPorKG.ToString();
+            entNomeProduto.TextEntry = this.produto.Descricao;
+            entQtde.TextEntry        = this.produto.Quantidade.ToString();
+            entValorPorKG.TextEntry  = this.produto.ValorPorKG.ToString();
 
-            btnExcluir_.IsVisible   = true;
-            btnSalvar_.IsVisible    = true;
-            btnCadastrar_.IsVisible = false;
+            //entQtde.Text        = this.produto.Quantidade.ToString();
+            //ValorPorKG.Text  = this.produto.ValorPorKG.ToString();
+
+            slBotaoExcluir.IsVisible   = true;
         }
     }
 
@@ -38,17 +85,15 @@ public partial class ProdCadastroProduto : ContentPage
         RealizarCadastroProduto();
     }
 
-    private void ButtonCadastrarProduto_Clicked(object sender, EventArgs e)
-    {
-        RealizarCadastroProduto();
-    }
-
     private async void ButtonExcluirProduto_Clicked(object sender, EventArgs e)
     {
-        //produto = this.produto;
-
         if(this.produto != null)
-            ExcluirProduto(this.produto);
+        {
+            bool resposta = await DisplayAlert("Exclusão", "Confirma a exclusão do produto?", "Sim", "Não");
+
+            if(resposta)
+                ExcluirProduto(this.produto);
+        }
         else
             await DisplayAlert("Produto vazio", "Ocorreu algum problema com o produto", "OK");
     }
@@ -60,8 +105,6 @@ public partial class ProdCadastroProduto : ContentPage
             var listaProdutos = controleProduto.ExcluirProdutoCache(produto);
 
             Voltar(listaProdutos);
-
-            //NavegarListaProdutos();
         }
     }
 
@@ -78,7 +121,6 @@ public partial class ProdCadastroProduto : ContentPage
     public void Voltar()
     {
         Navigation.PopAsync();
-        //Navigation.PopModalAsync();
     }
 
     public void NavegarListaProdutos()
@@ -88,10 +130,10 @@ public partial class ProdCadastroProduto : ContentPage
 
     private async void RealizarCadastroProduto()
     {
-        long pessoaID = 0;
-        var nomeProduto = entNomeProduto.Text;
-        var quantidade  = entQtde.Text;
-        var valorPorKG  = entValorPorKG.Text;
+        long pessoaID   = 0;
+        var nomeProduto = entNomeProduto.TextEntry;
+        var quantidade  = entQtde.TextEntry;
+        var valorPorKG  = entValorPorKG.TextEntry;
 
         if (string.IsNullOrEmpty(nomeProduto))
             LancarExcecaoCampoVazio("NOME DO PRODUTO");
@@ -131,8 +173,6 @@ public partial class ProdCadastroProduto : ContentPage
             }
 
             Voltar(controleProduto.BuscarListaProdutoCache());
-
-            //NavegarListaProdutos();
         }
     }
 
